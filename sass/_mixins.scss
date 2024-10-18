@@ -1,0 +1,64 @@
+@use "sass:math";
+
+// set all the colors for a link with one mixin call
+// order of arguments is:
+//
+// 		Link / Visited / Hover / Focus / Active
+//
+// those states not specified will inherit//
+// a { @include link-colors(#00c, #0cc, #c0c, #ccc, #cc0) }
+
+@mixin link-colors($link, $visited: false, $hover: false, $focus: false, $active: false) {
+	color: $link;
+	@if $visited {
+		&:visited {
+			color: $visited;
+		}
+	}
+	@if $hover {
+		&:hover {
+			color: $hover;
+		}
+	}
+	@if $focus {
+		&:focus {
+			color: $focus;
+		}
+	}
+	@if $active {
+		&:active {
+			color: $active;
+		}
+	}
+}
+
+
+// css only fluid type
+// a { @include fluid-type(min w, max w, min font size, max font size) }
+
+@function strip-unit($value) {
+  @return math.div($value, ($value * 0 + 1));
+}
+
+@mixin fluid-type($min-vw, $max-vw, $min-font-size, $max-font-size) {
+  $u1: unit($min-vw);
+  $u2: unit($max-vw);
+  $u3: unit($min-font-size);
+  $u4: unit($max-font-size);
+
+  @if $u1 == $u2 and $u1 == $u3 and $u1 == $u4 {
+    & {
+      font-size: $min-font-size;
+
+      @media screen and (min-width: $min-vw) {
+        font-size: calc(#{$min-font-size} + #{strip-unit($max-font-size - $min-font-size)} * ((100vw - #{$min-vw}) / #{strip-unit($max-vw - $min-vw)}));
+      }
+
+      @media screen and (min-width: $max-vw) {
+        font-size: $max-font-size;
+      }
+    }
+  } @else {
+    @error "Detected mixed units. Please use the same units for all parameters.";
+  }
+}
