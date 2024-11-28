@@ -1,7 +1,39 @@
-/* Widget section styling - Fixed centering */
+/* Widget section styling - With intro text */
 .widget-section {
     width: 100%;
     padding: 0 $gap;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    
+    .widget-intro {
+        max-width: 450px;
+        margin: 0 auto $gap;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        
+        h2 {
+            color: $white;
+            margin-bottom: $gap/2;
+            font-size: 2.5rem;
+        }
+        
+        p {
+            font-size: 1.5rem;
+            margin-bottom: $gap/2;
+            line-height: 1.2;
+        }
+        
+        .powered-by {
+            font-size: 1.2rem;
+            opacity: 0.8;
+        }
+    }
     
     .widget-container {
         max-width: 450px;
